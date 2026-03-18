@@ -5,6 +5,8 @@ RUN git clone --recursive --depth 1 https://github.com/microsoft/BitNet.git && r
 
 WORKDIR /BitNet
 
+RUN sed -i 's/int8_t \* y_col = y + col \* by;/const int8_t * y_col = y + col * by;/' /BitNet/src/ggml-bitnet-mad.cpp
+
 RUN pip install --no-cache-dir -r requirements.txt
 
 RUN python3 utils/codegen_tl2.py --model Llama3-8B-1.58-100B-tokens --BM 256,128,256,128 --BK 96,96,96,96 --bm 32,32,32,32
